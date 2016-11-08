@@ -16,21 +16,24 @@ class App extends Component {
 			videos: [] 
 		}
 
-		YoutubeSearch({key:youtubeAPIKey, term:'chef'},(videos)=>{
+		this.videoSearch('chef')
+	}
+
+	videoSearch(term){
+		YoutubeSearch({key:youtubeAPIKey, term:term},(videos)=>{
 			this.setState({ 
 				videos: videos,
 				selectedVideo: videos[0]
 			})
 		})
-
 	}
+
 	render(){
 		return (
 			<div className="jumbotron">
-				<button className="btn btn-lg" onClick={()=>console.log(this)}>Log This</button>
 				<div className="row">
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-						<SearchBar />
+						<SearchBar onSearchTermChange={(term)=>{this.videoSearch(term)}}/>
 					</div>
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 						<VideoDetail video={this.state.selectedVideo}/>
